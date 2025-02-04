@@ -23,15 +23,3 @@ class BSTIterator:
     def hasNext(self) -> bool:
         return len(self.stack) > 0
 
-# Example usage:
-# root = TreeNode(7, TreeNode(3), TreeNode(15, TreeNode(9), TreeNode(20)))
-# iterator = BSTIterator(root)
-# print(iterator.next())  # Output: 3
-# print(iterator.next())  # Output: 7
-# print(iterator.hasNext())  # Output: True
-# print(iterator.next())  # Output: 9
-# print(iterator.hasNext())  # Output: True
-# print(iterator.next())  # Output: 15
-# print(iterator.hasNext())  # Output: True
-# print(iterator.next())  # Output: 20
-# print(iterator.hasNext())  # Output: False
