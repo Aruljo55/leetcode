@@ -1,0 +1,22 @@
+class Solution:
+    def longestNiceSubarray(self, nums: List[int]) -> int:
+        n = len(nums)
+        max_length = 1  # Minimum nice subarray length is 1
+        
+        left = 0
+        bitwise_or = 0  # Track the bitwise OR of all numbers in current window
+        
+        for right in range(n):
+            # While the current number has bits that overlap with our window
+            while bitwise_or & nums[right] != 0:
+                # Remove the leftmost number from our window
+                bitwise_or ^= nums[left]
+                left += 1
+            
+            # Add current number to our window
+            bitwise_or |= nums[right]
+            
+            # Update max length
+            max_length = max(max_length, right - left + 1)
+        
+        return max_length
