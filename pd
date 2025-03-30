@@ -1,0 +1,4 @@
+SELECT employee_id, 
+       MAX(department_id) AS department_id
+FROM Employee
+GROUP BY employee_id
