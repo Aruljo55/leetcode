@@ -1,0 +1,19 @@
+WITH Tiv2015Duplicates AS (
+    -- Find tiv_2015 values that are duplicated
+    SELECT tiv_2015
+    FROM Insurance
+    GROUP BY tiv_2015
+    HAVING COUNT(*) > 1
+),
+UniqueLocations AS (
+    -- Find locations that are unique (lat, lon) pairs that appear only once
+    SELECT lat, lon
+    FROM Insurance
+    GROUP BY lat, lon
+    HAVING COUNT(*) = 1
+)
+-- Now, join the conditions and sum tiv_2016 for the rows that meet both criteria
+SELECT ROUND(SUM(i.tiv_2016), 2) AS tiv_2016
+FROM Insurance i
+JOIN Tiv2015Duplicates t ON i.tiv_2015 = t.tiv_2015
+JOIN UniqueLocations u ON i.lat = u.lat AND i.lon = u.lon;
