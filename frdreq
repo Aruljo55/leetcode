@@ -1,0 +1,25 @@
+WITH FriendCounts AS (
+    -- Count friends for each person from requester_id
+    SELECT requester_id AS id, COUNT(DISTINCT accepter_id) AS friend_count
+    FROM RequestAccepted
+    GROUP BY requester_id
+    
+    UNION ALL
+    
+    -- Count friends for each person from accepter_id
+    SELECT accepter_id AS id, COUNT(DISTINCT requester_id) AS friend_count
+    FROM RequestAccepted
+    GROUP BY accepter_id
+)
+
+-- Now, group by id and sum the friend counts to get total friends for each person
+, TotalFriendCounts AS (
+    SELECT id, SUM(friend_count) AS total_friends
+    FROM FriendCounts
+    GROUP BY id
+)
+
+-- Find the person(s) with the most friends
+SELECT id, total_friends AS num
+FROM TotalFriendCounts
+WHERE total_friends = (SELECT MAX(total_friends) FROM TotalFriendCounts);

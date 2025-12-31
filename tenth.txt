@@ -1,0 +1,5 @@
+if [ $(awk 'END{print NR}' file.txt) -lt 10 ]; then
+    exit 0  # Output nothing if less than 10 lines
+else
+    sed -n '10p' file.txt
+fi
