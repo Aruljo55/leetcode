@@ -27,13 +27,20 @@ class Solution:
             visited[m-1][j] = True
 
         water = 0
-        dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+        directions = [(1,0),(-1,0),(0,1),(0,-1)]
 
         while heap:
-            h, x, y = heapq.heappop(heap)
-            for dx, dy in dirs:
+            height, x, y = heapq.heappop(heap)
+            for dx, dy in directions:
                 nx = x + dx
                 ny = y + dy
                 if 0 <= nx < m and 0 <= ny < n and not visited[nx][ny]:
                     visited[nx][ny] = True
-                    nh = heig
+                    next_height = heightMap[nx][ny]
+                    if next_height < height:
+                        water += height - next_height
+                        heapq.heappush(heap, (height, nx, ny))
+                    else:
+                        heapq.heappush(heap, (next_height, nx, ny))
+
+        return water
