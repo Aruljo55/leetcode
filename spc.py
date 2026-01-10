@@ -1,5 +1,5 @@
 class Solution:
-    def strongPasswordChecker(self, password: str) -> int:
+    def strongPasswordChecker(self, password):
         n = len(password)
 
         has_lower = has_upper = has_digit = 0
