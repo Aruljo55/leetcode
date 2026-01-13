@@ -1,7 +1,7 @@
 class Solution:
-    def findMinimumY(self, squares):
-        total = 0
-        min_y = float('inf')
+    def separateSquares(self, squares):
+        total = 0.0
+        min_y = 10**30
         max_y = 0
 
         for _, y, l in squares:
@@ -11,23 +11,21 @@ class Solution:
 
         half = total / 2.0
 
-        def area_below(y):
+        def area_below(h):
             area = 0.0
-            for _, y0, l in squares:
-                if y <= y0:
+            for _, y, l in squares:
+                if h <= y:
                     continue
-                elif y >= y0 + l:
-                    area += l * l
-                else:
-                    area += (y - y0) * l
+                area += min(h - y, l) * l
             return area
 
         left, right = min_y, max_y
-        for _ in range(60):
-            mid = (left + right) / 2
+
+        for _ in range(80):
+            mid = (left + right) / 2.0
             if area_below(mid) < half:
                 left = mid
             else:
                 right = mid
 
-        return left
+        return (left + right) / 2.0
